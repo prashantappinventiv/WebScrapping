@@ -25,7 +25,7 @@ export class WebScrappingService {
 
       return states;
     } catch (error) {
-      console.error('Error during web scraping:', error.message);
+      console.error('Error during web scraping:', error);
       throw new Error(ERROR_MESSAGE.FAILED);
     }
   }

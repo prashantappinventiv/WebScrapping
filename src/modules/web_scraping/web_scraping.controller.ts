@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
 import { HttpResponse } from 'src/common/httpResponse';
 import { WebScrapingDto } from './dto/web_scraping.dto';
@@ -45,12 +45,14 @@ export class WebScrappingController {
         response.setHeader('Content-Type', 'application/json');
         fs.createReadStream(fileName).pipe(response.status(200));
       } else {
-        return this.httpResponse.sendErrorResponse(
+        return this.httpResponse.sendResponse(
           response,
-          RESPONSE_DATA.ERROR,
+          { statusCode: HttpStatus.OK },
+          scrapedData,
         );
       }
     } catch (error) {
+      console.error('error is', error);
       this.httpResponse.sendErrorResponse(
         response,
         RESPONSE_DATA.ERROR,
