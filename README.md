@@ -1,3 +1,13 @@
+The WebScrapper application is based on a nest js which is used for webscrapping . In this application i used cheerio library for scrapping .
+In this i take url,tag and attribute in body after this payload a axios call hit that url and fetch the data which you give in tag and attribute and download the
+json file of that data.
+
+PORT = 8001
+
+SWAGGER URL
+http://localhost:8001/swagger#/
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
