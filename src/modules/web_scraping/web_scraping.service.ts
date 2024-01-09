@@ -6,9 +6,9 @@ import { ERROR_MESSAGE } from 'src/common/constant';
 
 @Injectable()
 export class WebScrappingService {
-  async scrapeData(webScrapingDto: WebScrapingDto): Promise<any> {
+  async scrapeData(webScrapingDto: WebScrapingDto): Promise<string[]> {
     try {
-      const states: any = [];
+      const states: string[] = [];
       const response = await axios.get(webScrapingDto.url);
       const $ = cheerio.load(response.data);
 
