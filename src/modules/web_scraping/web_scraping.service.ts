@@ -6,7 +6,7 @@ import { ERROR_MESSAGE } from 'src/common/constant';
 
 @Injectable()
 export class WebScrappingService {
-  async scrapeData(webScrapingDto: WebScrapingDto): Promise<string[]> {
+  async scrapeData(webScrapingDto: WebScrapingDto): Promise<any> {
     try {
       const states: string[] = [];
       const response = await axios.get(webScrapingDto.url);
@@ -25,8 +25,13 @@ export class WebScrappingService {
 
       return states;
     } catch (error) {
-      console.error('Error during web scraping:', error);
-      throw new Error(ERROR_MESSAGE.FAILED);
+      if (axios.isAxiosError(error)) {
+        console.log('inside axios if');
+        throw new Error(ERROR_MESSAGE.INVALID_URL);
+      } else {
+        console.error('Error during web scraping:', error);
+        throw new Error(ERROR_MESSAGE.INVALID_DATA);
+      }
     }
   }
 }

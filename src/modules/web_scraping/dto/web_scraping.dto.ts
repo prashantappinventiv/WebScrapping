@@ -1,5 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  Matches,
+  ValidationArguments,
+} from 'class-validator';
 
 export class WebScrapingDto {
   @ApiProperty({
@@ -9,6 +14,10 @@ export class WebScrapingDto {
   })
   @IsNotEmpty()
   @IsString()
+  @Matches(/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/, {
+    message: (args: ValidationArguments) =>
+      `${args.property} must be a valid URL.`,
+  })
   url: string;
 
   @ApiProperty({ description: 'The HTML tag for data selection', example: 'p' })

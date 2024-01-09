@@ -6,6 +6,7 @@ import { Response } from 'express';
 import { WebScrappingService } from './web_scraping.service';
 import { RESPONSE_DATA } from 'src/common/response';
 import * as fs from 'fs';
+import { ERROR_MESSAGE } from 'src/common/constant';
 
 @ApiTags('Web Scraping')
 @Controller('/WebScrap')
@@ -45,14 +46,21 @@ export class WebScrappingController {
         response.setHeader('Content-Type', 'application/json');
         fs.createReadStream(fileName).pipe(response.status(200));
       } else {
-        return this.httpResponse.sendResponse(
+        return this.httpResponse.sendErrorResponse(
           response,
-          { statusCode: HttpStatus.OK },
-          scrapedData,
+          { statusCode: HttpStatus.BAD_REQUEST },
+          ERROR_MESSAGE.INVALID_DATA,
         );
       }
     } catch (error) {
-      console.error('error is', error);
+      if (error.message === ERROR_MESSAGE.INVALID_URL) {
+        return this.httpResponse.sendErrorResponse(
+          response,
+          RESPONSE_DATA.ERROR,
+          ERROR_MESSAGE.INVALID_URL,
+        );
+      }
+      console.error('Unexpected error is', error);
       this.httpResponse.sendErrorResponse(
         response,
         RESPONSE_DATA.ERROR,

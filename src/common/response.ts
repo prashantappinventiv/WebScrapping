@@ -8,6 +8,7 @@ import { HttpStatus } from '@nestjs/common';
 export const RESPONSE_MSG = {
   SUCCESS: 'Success.',
   ERROR: 'Something went wrong.',
+  INVALID_URL: 'Invalid URL provided. Please check the URL and try again.',
 };
 
 export const RESPONSE_DATA = {
